@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UFTB Cover Page Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+:root{--bg:#eceef8;--pur:#5b4fe0;--pur2:#4637c9;--navy:#1d1e36;--navy2:#2a2c48;--ink:#16172b;--muted:#7a7d98;--line:#e4e6f2;--soft:#f4f5fb;--card:#fff;--ok:#1f9d6b;--err:#d64545;--shadow:0 20px 60px rgba(60,60,140,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Hind Siliguri',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* LOGIN */
+#login{min-height:100vh;display:grid;place-items:center;padding:28px}
+.lbox{width:100%;max-width:980px;display:grid;grid-template-columns:1.05fr 1fr;border-radius:34px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.hero{background:linear-gradient(150deg,#1d1e36 30%,#3d34a8);color:#fff;padding:46px 42px;display:flex;flex-direction:column;justify-content:space-between;gap:26px}
+.hero-logo{width:76px;height:76px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden}
+.hero-logo img{width:60px;height:60px;object-fit:contain}
+.hero-logo b{color:var(--pur);font-size:17px}
+.hero h1{font-size:32px;line-height:1.3;font-weight:800;margin:26px 0 12px}
+.hero p.lead{font-size:15px;line-height:1.75;color:#c9cbe6}
+.feats{display:grid;gap:10px;margin-top:24px}
+.feat{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.08);padding:11px 14px;border-radius:40px;font-size:13.5px}
+.feat .ic{width:34px;height:34px;border-radius:50%;background:var(--pur);display:grid;place-items:center}
+.hero small{color:#9a9dc4;font-size:12.5px}
+.login-side{display:grid;place-items:center;padding:34px}
+.login-card{width:100%;max-width:380px}
+.login-card h2{font-size:25px;font-weight:800;margin-bottom:6px}
+.login-card p{color:var(--muted);font-size:14px;margin-bottom:22px;line-height:1.6}
+
+/* CONTROLS */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:12px;font-weight:600;color:var(--muted);padding-left:4px}
+.field input{height:46px;border:1.5px solid var(--line);border-radius:14px;padding:0 16px;font:inherit;font-size:14px;font-weight:500;background:var(--soft);color:var(--ink);transition:.15s;width:100%}
+.field input:focus{outline:none;border-color:var(--pur);background:#fff;box-shadow:0 0 0 4px #e7e5fc}
+.field input::placeholder{color:#a9abc4}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{height:48px;border:0;border-radius:40px;color:#fff;font-weight:600;font-size:14px;padding:0 26px;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(135deg,#6c5ff0,var(--pur2));box-shadow:0 10px 22px rgba(91,79,224,.35)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(91,79,224,.45)}
+.btn:disabled{opacity:.65;cursor:wait;transform:none}
+.btn.full{width:100%}
+.btn.green{background:#fff;color:var(--pur);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+
+/* APP */
+.wrap{max-width:1360px;margin:22px auto;background:#fff;border-radius:36px;padding:20px 28px 28px;box-shadow:var(--shadow)}
+.tb{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px;line-height:1.2}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+.brand .lg{width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--line);display:grid;place-items:center;overflow:hidden;flex:none}
+.brand .lg img{width:36px;height:36px;object-fit:contain}
+.brand .lg b{color:var(--pur);font-size:11px}
+#nav{margin:0 auto;background:var(--navy);border-radius:40px;padding:6px;display:flex;gap:4px;overflow-x:auto}
+#nav a{color:#c9cbe6;text-decoration:none;font-size:13px;font-weight:500;padding:11px 20px;border-radius:30px;white-space:nowrap}
+#nav a.on{background:var(--pur);color:#fff}
+.user{display:flex;align-items:center;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6c5ff0,#a79cff);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px}
+.ut b{display:block;font-size:13.5px}.ut small{color:var(--muted);font-size:12px}
+.out{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center}
+.out:hover{background:var(--navy);color:#fff}
+.title{margin:26px 0 22px}
+.title h1{font-size:40px;font-weight:800;letter-spacing:-.8px}
+.title p{color:var(--muted);font-size:14px;margin-top:4px}
+.card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:24px 26px;box-shadow:0 8px 26px rgba(60,60,140,.07)}
+.ph{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.num{width:34px;height:34px;border-radius:50%;background:var(--pur);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.ph h2{font-size:16px;font-weight:700}
+.ph small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;margin-top:1px}
+.seg{display:inline-grid;grid-template-columns:1fr 1fr;background:var(--soft);border:1px solid var(--line);border-radius:40px;padding:5px;margin-bottom:20px;gap:4px;min-width:min(100%,380px)}
+.seg button{border:0;background:transparent;height:42px;border-radius:30px;font-weight:600;font-size:13px;color:var(--muted);transition:.18s;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 20px}
+.seg button.on{background:var(--pur);color:#fff;box-shadow:0 6px 14px rgba(91,79,224,.35)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px}
+.dark{margin-top:22px;background:var(--navy);border-radius:34px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,480px);gap:22px;align-items:start}
+.dark .col{display:grid;gap:18px}
+.dcard{background:var(--navy2);color:#fff;border-radius:24px;padding:22px}
+.dcard .ph small{color:#a9acd0}
+.tpls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tpl{border:2px solid transparent;border-radius:18px;padding:8px 8px 10px;background:rgba(255,255,255,.07);text-align:center;font-size:12px;font-weight:600;color:#c9cbe6;transition:.18s;position:relative}
+.tpl:hover{border-color:#8f86ff;transform:translateY(-2px)}
+.tpl.on{border-color:#8f86ff;background:var(--pur);color:#fff}
+.tpl.on::after{content:"✓";position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--pur);font-size:12px;font-weight:700;display:grid;place-items:center}
+.thumb{height:84px;border-radius:7px;background:#fff;border:1px solid var(--line);margin-bottom:7px;position:relative;overflow:hidden}
+.thumb i{position:absolute;display:block}
+.k0 .a{left:38%;top:7px;width:24%;height:14px;background:#4aa56a;border-radius:50%}
+.k0 .b{left:22%;right:22%;top:27px;height:3px;background:#222}
+.k0 .c{left:30%;right:30%;top:34px;height:2px;background:#aaa}
+.k0 .d{left:28%;right:28%;top:46px;height:2px;background:#4472c4;box-shadow:0 6px 0 #4472c4}
+.k0 .e{left:12%;width:30%;top:62px;height:2px;background:#bbb;box-shadow:0 5px 0 #ddd}
+.k0 .f{right:12%;width:30%;top:62px;height:2px;background:#bbb;box-shadow:0 5px 0 #ddd}
+.k4 .a{left:42%;top:6px;width:16%;height:10px;background:#cfd6f3;border-radius:50%}
+.k4 .b{left:12%;right:12%;top:22px;height:5px;background:#222}
+.k4 .c{left:25%;right:25%;top:33px;height:2px;background:#999}
+.k4 .d{left:14%;width:32%;top:50px;height:2px;background:#555;box-shadow:0 5px 0 #aaa,0 10px 0 #aaa}
+.k4 .e{right:14%;width:32%;top:50px;height:2px;background:#555;box-shadow:0 5px 0 #aaa,0 10px 0 #aaa}
+.k1{border:3px double #1a2a6c}
+.k1 .a{left:25%;right:25%;top:22px;height:5px;background:#c9d1f5;box-shadow:0 12px 0 #dfe4f8,0 24px 0 #dfe4f8}
+.k2 .a{left:0;top:0;bottom:0;width:22%;background:linear-gradient(#2f4bd8,#1b2d9a)}
+.k2 .b{left:36%;right:12%;top:22px;height:5px;background:#c9d1f5;box-shadow:0 12px 0 #dfe4f8,0 24px 0 #dfe4f8}
+.k3 .a{left:0;right:0;top:0;height:28%;background:#14213d}
+.k3 .b{left:20%;right:20%;top:46px;height:5px;background:#c9d1f5;box-shadow:0 12px 0 #dfe4f8}
+
+.logo-box{display:flex;align-items:center;gap:14px;margin-top:18px;background:rgba(255,255,255,.07);border-radius:20px;padding:12px 16px}
+.logo-box .pv{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;flex:none}
+.logo-box .pv img{width:44px;height:44px;object-fit:contain}
+.logo-box .pv b{font-size:10px;color:var(--muted)}
+.logo-box div.t{flex:1;font-size:12.5px;line-height:1.5;color:#a9acd0}
+.logo-box div.t b{color:#fff;display:block;font-size:13.5px}
+.mini{height:36px;border-radius:30px;padding:0 18px;font-size:12.5px;font-weight:600;border:0;background:#fff;color:var(--pur);display:inline-flex;align-items:center;cursor:pointer}
+.mini:hover{background:#e7e5fc}
+.drop{border:2px dashed rgba(255,255,255,.28);border-radius:22px;padding:24px 16px;text-align:center;color:#a9acd0;font-size:13.5px;cursor:pointer;transition:.18s;background:rgba(255,255,255,.04)}
+.drop:hover,.drop.over{border-color:#8f86ff;background:rgba(143,134,255,.15)}
+.drop svg{width:34px;height:34px;margin-bottom:8px;color:#a79cff}
+.drop b{color:#fff;display:block;margin-bottom:3px;font-size:14.5px}
+.filechip{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.1);color:#b9f3d8;border-radius:30px;padding:10px 18px;font-size:13px;font-weight:600;margin-top:12px}
+.filechip button{border:0;background:none;color:#ff9b9b;font-weight:700;font-size:20px;line-height:1}
+.note{font-size:12.5px;color:#a9acd0;line-height:1.65;margin-top:12px}
+.msg{font-size:13px;margin-top:14px;padding:11px 16px;border-radius:18px;display:none;line-height:1.5}
+.msg.err{display:block;background:rgba(255,90,90,.16);color:#ffb0b0}
+.msg.ok{display:block;background:rgba(60,220,150,.16);color:#8ff3c6}
+.msg.warn{display:block;background:rgba(255,200,80,.16);color:#ffd98a}
+.actions{margin-top:18px}
+.preview{position:sticky;top:20px;background:linear-gradient(150deg,#6a5cf0,#4a3dc6);border-radius:28px;padding:20px;color:#fff;box-shadow:0 18px 40px rgba(60,48,180,.4)}
+.pbar{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 16px;gap:10px;flex-wrap:wrap}
+.pbar h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#7ff0bd;box-shadow:0 0 0 4px rgba(127,240,189,.25)}
+.chips{display:flex;gap:8px}
+.chip{background:rgba(255,255,255,.2);color:#fff;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:30px}
+.stage{background:rgba(255,255,255,.1);background-image:radial-gradient(rgba(255,255,255,.2) 1.3px,transparent 1.3px);background-size:16px 16px;border-radius:20px;padding:22px 20px;display:flex;justify-content:center;overflow:hidden}
+.stage-wrap{width:var(--w,500px);height:var(--h,707px);box-shadow:0 18px 40px rgba(20,10,90,.4);border-radius:2px;overflow:hidden;background:#fff}
+.scaler{transform-origin:top left}
+
+/* ================= A4 COVERS ================= */
+.cover{width:794px;height:1123px;background:#fff;position:relative;overflow:hidden;color:#111;font-family:'Hind Siliguri','Inter',sans-serif}
+.cover .logo{object-fit:contain;display:block}
+.crest{border-radius:50%;border:4px solid currentColor;display:grid;place-items:center;font-family:'Playfair Display',serif;font-weight:700}
+.wrap{word-break:break-word}
+.cover sup{font-size:.62em;vertical-align:super;line-height:0}
+.cover .info{width:100%;border-collapse:collapse;font-size:19px}
+.cover .info td{padding:9px 0;vertical-align:top}
+.cover .info td:first-child{width:200px;font-weight:600}
+.cover .info td:nth-child(2){width:22px}
+
+/* --- C0 : UFTB Official (uploaded style) --- */
+.c0{font-family:'Times New Roman',Tinos,serif;padding:70px 76px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#000}
+.c0 .logo,.c0 .crest{width:150px;height:150px}
+.c0 .crest{font-size:40px;color:#1d7a46}
+.c0 .uni{font-size:27px;font-weight:700;margin-top:26px}
+.c0 .dept{font-size:19px;font-weight:700;margin-top:14px}
+.c0 .doc{font-size:25px;margin-top:62px;padding-bottom:10px;width:560px;border-bottom:2px solid #000;font-weight:400}
+.c0 .topic{font-size:20px;font-weight:700;margin-top:16px;max-width:600px;line-height:1.3}
+.c0 .ct{font-size:19px;font-weight:700;color:#4472c4;margin-top:62px;max-width:620px;line-height:1.35}
+.c0 .cc{font-size:19px;font-weight:700;color:#4472c4;margin-top:16px}
+.c0 .two{display:flex;justify-content:space-between;width:100%;margin-top:52px;text-align:left;font-size:18px;line-height:1.5;gap:30px}
+.c0 .two h4{font-size:19px;font-weight:700;margin-bottom:12px}
+.c0 .two div.col{flex:1}
+.c0 .two div.col.r{padding-left:36px;margin-top:-4px}
+.c0 .lt{font-size:19px;font-weight:700;margin-top:54px}
+.c0 .date{font-size:18px;margin-top:34px;padding-bottom:12px;width:560px;border-bottom:2px solid #000}
+.c0 .date b{font-weight:700}
+.c0 .fac{font-size:18px;margin-top:42px}
+
+/* --- C4 : IEEE --- */
+.c4{font-family:'Times New Roman',Tinos,serif;padding:64px 80px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#000}
+.c4 .logo,.c4 .crest{width:96px;height:96px}
+.c4 .crest{font-size:28px}
+.c4 .uni{font-size:21px;font-weight:700;margin-top:16px;font-variant:small-caps;letter-spacing:1px}
+.c4 .dept{font-size:17px;font-style:italic;margin-top:4px}
+.c4 .rule2{width:100%;height:6px;border-top:2px solid #000;border-bottom:1px solid #000;margin:22px 0}
+.c4 .kind{font-size:15px;letter-spacing:3px;text-transform:uppercase;margin-top:26px}
+.c4 .title{font-size:34px;font-weight:700;line-height:1.22;margin-top:16px;max-width:620px}
+.c4 .sub{font-size:18px;font-style:italic;margin-top:18px;max-width:600px;line-height:1.45}
+.c4 .auth{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;margin-top:62px}
+.c4 .auth .lab{font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #000;padding-bottom:6px}
+.c4 .auth .n{font-size:20px;font-weight:700}
+.c4 .auth div{font-size:17px;line-height:1.5}
+.c4 .auth .it{font-style:italic}
+.c4 .bot{margin-top:auto;width:100%}
+.c4 .bot .dt{font-size:18px}
+.c4 .bot .ft{font-size:15px;font-style:italic;margin-top:8px}
+
+/* --- C1 : Classic --- */
+.c1 .frame{position:absolute;inset:26px;border:2px solid #1a2a6c;outline:1px solid #1a2a6c;outline-offset:5px}
+.c1 .in{position:absolute;inset:26px;padding:56px 64px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.c1 .logo,.c1 .crest{width:120px;height:120px}
+.c1 .crest{color:#1a2a6c;font-size:34px}
+.c1 h1.uni{font-family:'Playfair Display',serif;font-size:31px;color:#1a2a6c;margin-top:16px;line-height:1.25}
+.c1 .dept{font-size:20px;margin-top:8px;font-weight:500;color:#333}
+.c1 .rule{width:160px;height:3px;background:#1a2a6c;margin:26px 0}
+.c1 .doc{font-family:'Playfair Display',serif;font-size:36px;letter-spacing:3px;color:#1a2a6c;text-transform:uppercase}
+.c1 .topic{font-size:23px;margin-top:12px;font-weight:600;max-width:560px}
+.c1 .tbl{margin-top:34px;width:100%;text-align:left}
+.c1 .two{display:grid;grid-template-columns:1fr 1fr;gap:26px;width:100%;margin-top:30px;text-align:left}
+.c1 .box{border:1.5px solid #1a2a6c;border-radius:6px;padding:18px 20px;font-size:18px;line-height:1.55}
+.c1 .box h3{font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:#1a2a6c;margin-bottom:8px;border-bottom:1px solid #c9d1f5;padding-bottom:6px}
+.c1 .date{margin-top:auto;font-size:19px;font-weight:600}
+
+/* --- C2 : Modern --- */
+.c2 .band{position:absolute;left:0;top:0;bottom:0;width:150px;background:linear-gradient(180deg,#2f4bd8,#1b2d9a)}
+.c2 .band span{position:absolute;left:50%;bottom:60px;transform:translateX(-50%) rotate(-90deg);white-space:nowrap;color:#fff;letter-spacing:6px;font-size:17px;font-weight:600;opacity:.9;text-transform:uppercase}
+.c2 .in{position:absolute;left:150px;right:0;top:0;bottom:0;padding:64px 60px 54px 58px;display:flex;flex-direction:column}
+.c2 .logo,.c2 .crest{width:96px;height:96px}
+.c2 .crest{color:#2f4bd8;font-size:28px}
+.c2 h1.uni{font-size:29px;font-weight:700;color:#14213d;margin-top:18px;line-height:1.25}
+.c2 .dept{color:#2f4bd8;font-weight:600;font-size:19px;margin-top:4px}
+.c2 .doc{margin-top:54px;font-size:15px;letter-spacing:3px;color:#7a84a8;font-weight:600;text-transform:uppercase}
+.c2 .topic{font-size:36px;font-weight:700;line-height:1.2;color:#14213d;margin-top:8px}
+.c2 .tbl{margin-top:34px}
+.c2 .tbl td{border-bottom:1px solid #e5e8f4}
+.c2 .two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+.c2 .box{background:#f3f5fd;border-left:4px solid #2f4bd8;border-radius:6px;padding:16px 18px;font-size:18px;line-height:1.55}
+.c2 .box h3{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#2f4bd8;margin-bottom:6px}
+.c2 .date{margin-top:auto;font-size:18px;color:#444}.c2 .date b{color:#14213d}
+
+/* --- C3 : Bold --- */
+.c3 .head{background:#14213d;color:#fff;padding:52px 60px 44px;display:flex;align-items:center;gap:26px}
+.c3 .logo,.c3 .crest{width:100px;height:100px}
+.c3 .crest{color:#fca311;font-size:30px}
+.c3 h1.uni{font-family:'Playfair Display',serif;font-size:29px;line-height:1.25}
+.c3 .dept{color:#fca311;font-size:18px;margin-top:6px;font-weight:500}
+.c3 .in{padding:56px 70px 50px;display:flex;flex-direction:column;height:calc(1123px - 196px)}
+.c3 .doc{text-align:center;font-family:'Playfair Display',serif;font-size:40px;color:#14213d;letter-spacing:2px;text-transform:uppercase}
+.c3 .topic{text-align:center;font-size:23px;font-weight:500;margin-top:10px;color:#444}
+.c3 .rule{width:90px;height:4px;background:#fca311;margin:22px auto 34px}
+.c3 .two{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:34px}
+.c3 .box{border-top:4px solid #fca311;background:#f7f8fb;padding:16px 20px;font-size:18px;line-height:1.55}
+.c3 .box h3{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14213d;margin-bottom:6px}
+.c3 .date{margin-top:auto;text-align:center;font-size:19px;padding-top:20px;border-top:1px solid #dde0ea}
+
+@media(max-width:1150px){.dark{grid-template-columns:1fr}.preview{position:static}}
+@media(max-width:900px){.lbox{grid-template-columns:1fr}.feats{display:none}.wrap{margin:0;border-radius:0;padding:16px 14px}#nav{order:3;width:100%}.ut{display:none}.title h1{font-size:30px}.row{grid-template-columns:1fr}.dark{padding:14px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login"><div class="lbox">
+  <div class="hero">
+    <div>
+      <div class="hero-logo"><img class="logoImg hidden" alt="logo.png"><b class="logoFb">UFTB</b></div>
+      <h1>কভার পেজ,<br>এক মিনিটেই রেডি।</h1>
+      <p class="lead">ইউনিভার্সিটি অব ফ্রন্টিয়ার টেকনোলজি, বাংলাদেশ-এর অ্যাসাইনমেন্ট ও ল্যাব রিপোর্টের জন্য রেডি-মেড কভার পেজ। তথ্য দিন, টেমপ্লেট বেছে নিন, PDF নিন।</p>
+      <div class="feats">
+        <div class="feat"><div class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>UFTB Official, IEEE সহ ৫টি টেমপ্লেট</div>
+        <div class="feat"><div class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div>মূল অ্যাসাইনমেন্টের PDF মার্জ করে একসাথে ডাউনলোড</div>
+        <div class="feat"><div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></div>নাম, আইডি, সেশন অটো-ফিল থাকে</div>
+      </div>
+    </div>
+    <small>&copy; Masfiq Rahman Misha & Onu- অণু</small>
+  </div>
+  <div class="login-side">
+    <form class="login-card" id="loginForm">
+      <h2>Welcome</h2>
+      <p>একবার আপনার তথ্য দিন, পরের বার থেকে সব অটো-ফিল থাকবে।</p>
+      <div class="field"><label>Full Name</label><input id="l_name" value="Abcde Fghij" required></div>
+      <div class="row">
+        <div class="field"><label>Student ID</label><input id="l_id" value="1234567" required></div>
+        <div class="field"><label>Session</label><input id="l_session" value="2023-24" required></div>
+      </div>
+      <div class="field"><label>Department</label><input id="l_dept" value="Software Engineering" required></div>
+      <div class="field"><label>Faculty</label><input id="l_fac" value="Faculty of Software and Machine Intelligence Engineering" required></div>
+      <button class="btn full" type="submit">লগইন <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
+  </div>
+</div></section>
+
+<!-- APP -->
+<div id="app" class="hidden"><div class="wrap">
+  <header class="tb">
+    <div class="brand"><div class="lg"><img class="logoImg hidden" alt=""><b class="logoFb">UFTB</b></div><div>UFTB Cover<small>Page Generator</small></div></div>
+    <nav id="nav"><a href="#p1" class="on">কভারের তথ্য</a><a href="#p2">টেমপ্লেট ও লোগো</a><a href="#p3">PDF মার্জ</a><a href="#pv">লাইভ প্রিভিউ</a></nav>
+    <div class="user"><div class="av" id="u_av"></div><div class="ut"><b id="u_name"></b><small id="u_meta"></small></div>
+      <button class="out" id="logout" title="লগআউট"><svg class="i" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
+  </header>
+  <div class="title"><h1>Cover Page</h1><p>অ্যাসাইনমেন্ট ও ল্যাব রিপোর্টের কভার এক জায়গায় বানান ও ডাউনলোড করুন।</p></div>
+
+  <div class="card" id="p1">
+    <div class="ph"><div class="num">1</div><div><h2>কভার পেজের তথ্য</h2><small>সব তথ্য লাইভ প্রিভিউতে দেখা যাবে</small></div></div>
+    <div class="seg" id="typeSeg">
+      <button class="on" data-v="Assignment"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Assignment</button>
+      <button data-v="Lab Report"><svg class="i" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>Lab Report</button>
+    </div>
+    <div class="fgrid">
+      <div class="field"><label id="serialLbl">Assignment No.</label><input id="f_serial" placeholder="01" value="01"></div>
+      <div class="field"><label>Submission Date</label><input type="date" id="f_date"></div>
+      <div class="field"><label id="topicLbl">Assignment Name</label><input id="f_topic" placeholder="e.g. Basic Dart Programs"></div>
+      <div class="field"><label>Course Code</label><input id="f_cid" placeholder="PROG 212"></div>
+      <div class="field"><label>Level-Term</label><input id="f_lt" placeholder="Level-2 Term-1" value="Level-2 Term-2"></div>
+      <div class="field"><label>Course Title</label><input id="f_ctitle" placeholder="Android and Web Application Development Sessional"></div>
+      <div class="field" style="margin-bottom:0"><label>শিক্ষকের নাম</label><input id="f_teacher" placeholder="Mr. Rahman"></div>
+      <div class="field" style="margin-bottom:0"><label>শিক্ষকের পদবি</label><input id="f_desig" placeholder="Lecturer"></div>
+    </div>
+  </div>
+
+  <div class="dark">
+    <div class="col">
+      <div class="dcard" id="p2">
+        <div class="ph"><div class="num">2</div><div><h2>টেমপ্লেট ও লোগো</h2><small>স্টাইল বেছে নিন</small></div></div>
+        <div class="tpls" id="tpls">
+          <button class="tpl on" data-v="c0"><div class="thumb k0"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i></div>UFTB Official</button>
+          <button class="tpl" data-v="c4"><div class="thumb k4"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i></div>IEEE</button>
+          <button class="tpl" data-v="c1"><div class="thumb k1"><i class="a"></i></div>Classic</button>
+          <button class="tpl" data-v="c2"><div class="thumb k2"><i class="a"></i><i class="b"></i></div>Modern</button>
+          <button class="tpl" data-v="c3"><div class="thumb k3"><i class="a"></i><i class="b"></i></div>Bold</button>
+        </div>
+        <div class="logo-box">
+          <div class="pv"><img class="logoImg hidden" alt=""><b class="logoFb">LOGO</b></div>
+          <div class="t"><b id="logoState">logo.png খোঁজা হচ্ছে...</b><span id="logoHint"></span></div>
+          <label class="mini">বাছুন<input type="file" id="logoFile" accept="image/*" hidden></label>
+        </div>
+      </div>
+      <div class="dcard" id="p3">
+        <div class="ph"><div class="num">3</div><div><h2>মূল অ্যাসাইনমেন্ট যোগ করুন</h2><small>ঐচ্ছিক &middot; কভারের পরে মার্জ হবে</small></div></div>
+        <div class="drop" id="drop">
+          <svg class="i" viewBox="0 0 24 24" style="width:34px;height:34px"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          <b>PDF এখানে ড্রপ করুন বা ক্লিক করুন</b>
+          না দিলে শুধু কভার পেজ ডাউনলোড হবে
+          <input type="file" id="pdfFile" accept="application/pdf" hidden>
+        </div>
+        <div class="filechip hidden" id="chip"><span id="chipName"></span><button id="chipX" title="সরান">&times;</button></div>
+        <p class="note">অ্যাসাইনমেন্ট Word ফাইলে থাকলে আগে PDF-এ এক্সপোর্ট করে নিন।</p>
+        <div class="actions"><button class="btn full" id="dlBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span id="dlTxt">কভার পেজ PDF ডাউনলোড</span></button></div>
+        <div class="msg" id="msg"></div>
+      </div>
+    </div>
+    <div class="preview" id="pv">
+      <div class="pbar"><h3><span class="dot"></span>লাইভ প্রিভিউ</h3><div class="chips"><span class="chip" id="chipTpl">UFTB Official</span><span class="chip">A4</span></div></div>
+      <div class="stage" id="stage"><div class="stage-wrap" id="sw"><div class="scaler" id="scaler"><div id="cover"></div></div></div></div>
+    </div>
+  </div>
+</div></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const DEFAULT_FAC = 'Faculty of Software and Machine Intelligence Engineering';
+const TPL_NAMES = {c0:'UFTB Official',c4:'IEEE',c1:'Classic',c2:'Modern',c3:'Bold'};
+const state = { type:'Assignment', tpl:'c0', logo:'', pdf:null };
+const esc = s => String(s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad = n => /^\d$/.test(n) ? '0'+n : n;
+
+/* ---------- Logo (logo.png auto-load, fallback: manual select) ---------- */
+function blobToDataUrl(b){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(b); }); }
+function applyLogoUI(){
+  $$('.logoImg').forEach(i=>{ if(state.logo){ i.src=state.logo; i.classList.remove('hidden'); } else i.classList.add('hidden'); });
+  $$('.logoFb').forEach(b=>b.classList.toggle('hidden',!!state.logo));
+}
+async function loadLogo(){
+  let src='';
+  try{
+    const r = await fetch('logo.png',{cache:'no-cache'});
+    if(!r.ok) throw 0;
+    state.logo = await blobToDataUrl(await r.blob()); src='file';
+  }catch(e){
+    const saved = localStorage.getItem('uftb_logo');
+    if(saved){ state.logo=saved; src='saved'; }
+  }
+  applyLogoUI();
+  const s=$('#logoState'), h=$('#logoHint');
+  if(src==='file'){ s.textContent='logo.png লোড হয়েছে'; h.textContent=''; }
+  else if(src==='saved'){ s.textContent='সেভ করা লোগো ব্যবহার হচ্ছে'; h.textContent='logo.png এই ফোল্ডারে রাখলে অটো লোড হবে'; }
+  else { s.textContent='লোগো লোড হয়নি'; h.textContent='logo.png এই ফোল্ডারে রাখুন, অথবা “বাছুন” চেপে একবার দিন (সেভ থাকবে)।'; }
+  render();
+}
+$('#logoFile').onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  state.logo = await blobToDataUrl(f);
+  try{ localStorage.setItem('uftb_logo',state.logo); }catch(_){}
+  applyLogoUI(); $('#logoState').textContent='লোগো বাছাই করা হয়েছে'; $('#logoHint').textContent=''; render();
+};
+
+/* ---------- Login ---------- */
+const UKEY='uftb_user_v2';
+const getUser=()=>{ try{return JSON.parse(localStorage.getItem(UKEY))}catch(e){return null} };
+function showApp(u){
+  $('#login').classList.add('hidden'); $('#app').classList.remove('hidden');
+  $('#u_name').textContent=u.name; $('#u_av').textContent=u.name.trim()[0].toUpperCase();
+  $('#u_meta').textContent='ID '+u.id+' · '+u.session;
+  render(); fit();
+}
+$('#loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const u={name:$('#l_name').value.trim(),id:$('#l_id').value.trim(),session:$('#l_session').value.trim(),dept:$('#l_dept').value.trim(),fac:$('#l_fac').value.trim()};
+  localStorage.setItem(UKEY,JSON.stringify(u)); showApp(u);
+});
+$('#logout').onclick=()=>{ localStorage.removeItem(UKEY); location.reload(); };
+
+/* ---------- Date ---------- */
+function ordinal(n){ const v=n%100; if(v>=11&&v<=13) return n+'<sup>th</sup>'; return n+'<sup>'+({1:'st',2:'nd',3:'rd'}[n%10]||'th')+'</sup>'; }
+function fmtDate(v){
+  if(!v) return '';
+  const d=new Date(v+'T00:00:00');
+  return ordinal(d.getDate())+' '+d.toLocaleDateString('en-GB',{month:'long'})+', '+d.getFullYear();
+}
+
+/* ---------- Render ---------- */
+function render(){
+  const u=getUser(); if(!u) return;
+  const d={
+    serial:pad($('#f_serial').value.trim()), topic:esc($('#f_topic').value.trim()),
+    teacher:esc($('#f_teacher').value.trim()), desig:esc($('#f_desig').value.trim()),
+    cid:esc($('#f_cid').value.trim()), ctitle:esc($('#f_ctitle').value.trim()),
+    lt:esc($('#f_lt').value.trim()), date:fmtDate($('#f_date').value)
+  };
+  const isA = state.type==='Assignment';
+  const docTitle = (isA?'Assignment':'Lab Report') + (d.serial? (state.tpl==='c0' ? ' #'+d.serial : ' No: '+d.serial) : '');
+  const logo = state.logo ? `<img class="logo" src="${state.logo}" alt="">` : `<div class="crest">UFTB</div>`;
+  const uni='University of Frontier Technology, Bangladesh';
+  const dep='Department of '+esc(u.dept.replace(/^department of\s*/i,''));
+  const fac=esc(u.fac||DEFAULT_FAC);
+  const dash='&nbsp;';
+  const rows=`<table class="info tbl"><tbody>
+    <tr><td>Course Code</td><td>:</td><td class="wrap">${d.cid||dash}</td></tr>
+    <tr><td>Course Title</td><td>:</td><td class="wrap">${d.ctitle||dash}</td></tr></tbody></table>`;
+  const to=`<div class="box"><h3>Submitted To</h3><div class="wrap"><b>${d.teacher||dash}</b></div>${d.desig?`<div class="wrap">${d.desig}</div>`:''}<div>${dep}</div></div>`;
+  const by=`<div class="box"><h3>Submitted By</h3><div class="wrap"><b>${esc(u.name)}</b></div><div>ID: ${esc(u.id)}</div><div>Session: ${esc(u.session)}</div><div>${dep}</div></div>`;
+  const dateB=`Date of Submission: <b>${d.date||'—'}</b>`;
+  const topic=d.topic?`<div class="topic wrap">${d.topic}</div>`:'';
+  let h='';
+  if(state.tpl==='c0'){
+    h=`<div class="cover c0">${logo}
+      <div class="uni">${uni}</div><div class="dept">${dep}</div>
+      <div class="doc">${docTitle}</div>${topic}
+      <div class="ct">Course Title: ${d.ctitle||dash}</div><div class="cc">Course Code: ${d.cid||dash}</div>
+      <div class="two">
+        <div class="col"><h4>Submitted By:</h4><div>${esc(u.name)}</div><div><b>ID:</b> ${esc(u.id)}</div><div><b>Session:</b> ${esc(u.session)}</div><div>${dep}</div></div>
+        <div class="col r"><h4>Submitted To:</h4><div>${d.teacher||dash}</div>${d.desig?`<div>${d.desig}</div>`:''}<div>${dep}</div></div>
+      </div>
+      <div class="lt">${d.lt||dash}</div>
+      <div class="date"><b>Submission Date:</b> ${d.date||'—'}</div>
+      <div class="fac">${fac}</div></div>`;
+  } else if(state.tpl==='c4'){
+    h=`<div class="cover c4">${logo}
+      <div class="uni">${uni}</div><div class="dept">${dep}</div>
+      <div class="rule2"></div>
+      <div class="kind">${isA?'Assignment':'Lab Report'}${d.serial?' &middot; No. '+d.serial:''}</div>
+      <div class="title wrap">${d.topic||'Title of the '+(isA?'Assignment':'Lab Report')}</div>
+      <div class="sub">Submitted in partial fulfillment of the requirements of<br><b>${d.cid||dash}</b> &mdash; ${d.ctitle||dash}</div>
+      <div class="auth">
+        <div><div class="lab">Author</div><div class="n">${esc(u.name)}</div><div class="it">${dep.replace('Department of','Dept. of')}</div><div class="it">UFTB</div><div>ID: ${esc(u.id)} &middot; Session: ${esc(u.session)}</div></div>
+        <div><div class="lab">Supervisor</div><div class="n">${d.teacher||dash}</div>${d.desig?`<div class="it">${d.desig}</div>`:''}<div class="it">${dep.replace('Department of','Dept. of')}</div><div class="it">UFTB</div></div>
+      </div>
+      <div class="bot"><div class="rule2" style="margin:0 0 16px"></div><div class="dt">${dateB}</div><div class="ft">${d.lt?d.lt+' &middot; ':''}${fac}</div></div></div>`;
+  } else if(state.tpl==='c1'){
+    h=`<div class="cover c1"><div class="frame"></div><div class="in">
+      ${logo}<h1 class="uni">${uni}</h1><div class="dept">${dep}</div><div class="rule"></div>
+      <div class="doc">${docTitle}</div>${topic}
+      <div class="tbl">${rows}</div><div class="two">${to}${by}</div><div class="date">${dateB}</div></div></div>`;
+  } else if(state.tpl==='c2'){
+    h=`<div class="cover c2"><div class="band"><span>UFTB &middot; ${isA?'Assignment':'Lab Report'}</span></div><div class="in">
+      ${logo}<h1 class="uni">${uni}</h1><div class="dept">${dep}</div>
+      <div class="doc">${docTitle}</div>${topic||'<div class="topic">&nbsp;</div>'}
+      <div class="tbl">${rows}</div><div class="two">${to}${by}</div><div class="date">${dateB}</div></div></div>`;
+  } else {
+    h=`<div class="cover c3"><div class="head">${logo}<div><h1 class="uni">${uni}</h1><div class="dept">${dep}</div></div></div>
+      <div class="in"><div class="doc">${docTitle}</div>${topic}<div class="rule"></div>
+      ${rows}<div class="two">${to}${by}</div><div class="date">${dateB}</div></div></div>`;
+  }
+  $('#cover').innerHTML=h;
+  $('#chipTpl').textContent=TPL_NAMES[state.tpl];
+}
+$$('#app input').forEach(i=>i.addEventListener('input',render));
+
+$('#typeSeg').onclick=e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  $$('#typeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+  state.type=b.dataset.v; const a=state.type==='Assignment';
+  $('#serialLbl').textContent=a?'Assignment No.':'Lab Report No.';
+  $('#topicLbl').textContent=a?'Assignment Name':'Experiment Name';
+  render();
+};
+$('#tpls').onclick=e=>{
+  const b=e.target.closest('.tpl'); if(!b) return;
+  $$('.tpl').forEach(x=>x.classList.toggle('on',x===b));
+  state.tpl=b.dataset.v; render();
+};
+
+/* ---------- PDF upload ---------- */
+const drop=$('#drop'), pdfInput=$('#pdfFile');
+function flash(t,k){ const m=$('#msg'); m.className='msg'+(t?' '+k:''); m.textContent=t||''; }
+function setPdf(f){
+  if(!f) return;
+  if(f.type!=='application/pdf' && !/\.pdf$/i.test(f.name)){ flash('শুধু PDF ফাইল আপলোড করা যাবে।','err'); return; }
+  state.pdf=f; $('#chipName').textContent='📄 '+f.name+' ('+(f.size/1024/1024).toFixed(2)+' MB)';
+  $('#chip').classList.remove('hidden'); $('#dlTxt').textContent='কভার + অ্যাসাইনমেন্ট মার্জ করে ডাউনলোড'; $('#dlBtn').classList.add('green'); flash('');
+}
+function clearPdf(){ state.pdf=null; pdfInput.value=''; $('#chip').classList.add('hidden'); $('#dlTxt').textContent='কভার পেজ PDF ডাউনলোড'; $('#dlBtn').classList.remove('green'); }
+drop.onclick=()=>pdfInput.click();
+pdfInput.onchange=e=>setPdf(e.target.files[0]);
+$('#chipX').onclick=clearPdf;
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>setPdf(e.dataTransfer.files[0]));
+
+/* ---------- Preview scaling ---------- */
+function fit(){
+  const stage=$('#stage'); const avail=stage.clientWidth-40; if(avail<=0) return;
+  const s=Math.min(1,avail/794);
+  $('#scaler').style.transform=`scale(${s})`;
+  $('#sw').style.setProperty('--w',794*s+'px'); $('#sw').style.setProperty('--h',1123*s+'px');
+}
+window.addEventListener('resize',fit);
+
+/* ---------- Generate PDF ---------- */
+async function coverToJpeg(){
+  await document.fonts.ready;
+  const holder=document.createElement('div');
+  holder.style.cssText='position:fixed;left:-10000px;top:0;width:794px;height:1123px';
+  holder.appendChild($('#cover').firstElementChild.cloneNode(true));
+  document.body.appendChild(holder);
+  try{
+    const canvas=await html2canvas(holder.firstElementChild,{scale:3,backgroundColor:'#ffffff',useCORS:true,width:794,height:1123});
+    return canvas.toDataURL('image/jpeg',0.95);
+  } finally { holder.remove(); }
+}
+const dataUrlToBytes=u=>{ const b=atob(u.split(',')[1]); const a=new Uint8Array(b.length); for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i); return a; };
+
+$('#dlBtn').onclick=async()=>{
+  const btn=$('#dlBtn'), label=$('#dlTxt').textContent;
+  if(!$('#f_cid').value.trim() || !$('#f_teacher').value.trim()){ flash('Course Code আর শিক্ষকের নাম দিন, তারপর তৈরি করুন।','err'); return; }
+  btn.disabled=true; $('#dlTxt').textContent='তৈরি হচ্ছে...'; flash('');
+  try{
+    const { PDFDocument } = PDFLib;
+    const out = await PDFDocument.create();
+    const img = await out.embedJpg(dataUrlToBytes(await coverToJpeg()));
+    out.addPage([595.28,841.89]).drawImage(img,{x:0,y:0,width:595.28,height:841.89});
+    if(state.pdf){
+      const src = await PDFDocument.load(await state.pdf.arrayBuffer(),{ignoreEncryption:true});
+      (await out.copyPages(src,src.getPageIndices())).forEach(p=>out.addPage(p));
+    }
+    const bytes = await out.save(); const u=getUser();
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+    a.download=`${state.type.replace(' ','_')}_${pad($('#f_serial').value.trim())||'00'}_${$('#f_cid').value.trim().replace(/\s+/g,'')}_${u.id}${state.pdf?'_merged':'_cover'}.pdf`;
+    a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    flash(state.pdf?'কভার + অ্যাসাইনমেন্ট মার্জ হয়ে ডাউনলোড হয়েছে।':'কভার পেজ ডাউনলোড হয়েছে।','ok');
+  }catch(err){
+    console.error(err); flash('Error: '+(err.message||err)+'। PDF এনক্রিপ্টেড বা নষ্ট কিনা দেখুন।','err');
+  }finally{ btn.disabled=false; $('#dlTxt').textContent=label; }
+};
+
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>{$$('#nav a').forEach(x=>x.classList.toggle('on',x===a));}));
+
+/* ---------- Init ---------- */
+(function(){
+  const d=new Date(); $('#f_date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const u=getUser();
+  if(u){ ['name','id','session','dept','fac'].forEach(k=>{ if(u[k]) $('#l_'+k).value=u[k]; }); showApp(u); }
+  loadLogo();
+})();
+</script>
+</body>
+</html>
