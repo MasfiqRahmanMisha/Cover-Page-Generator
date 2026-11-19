@@ -72,8 +72,8 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .num{width:34px;height:34px;border-radius:50%;background:var(--pur);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
 .ph h2{font-size:16px;font-weight:700}
 .ph small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;margin-top:1px}
-.seg{display:inline-grid;grid-template-columns:1fr 1fr;background:var(--soft);border:1px solid var(--line);border-radius:40px;padding:5px;margin-bottom:20px;gap:4px;min-width:min(100%,380px)}
-.seg button{border:0;background:transparent;height:42px;border-radius:30px;font-weight:600;font-size:13px;color:var(--muted);transition:.18s;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 20px}
+.seg{display:inline-grid;grid-template-columns:repeat(3,auto);background:var(--soft);border:1px solid var(--line);border-radius:40px;padding:5px;margin-bottom:20px;gap:4px;max-width:100%;overflow-x:auto}
+.seg button{white-space:nowrap;border:0;background:transparent;height:42px;border-radius:30px;font-weight:600;font-size:13px;color:var(--muted);transition:.18s;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 20px}
 .seg button.on{background:var(--pur);color:#fff;box-shadow:0 6px 14px rgba(91,79,224,.35)}
 .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px}
 .dark{margin-top:22px;background:var(--navy);border-radius:34px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,480px);gap:22px;align-items:start}
@@ -230,10 +230,42 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .c3 .two{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:34px}
 .c3 .box{border-top:4px solid #fca311;background:#f7f8fb;padding:16px 20px;font-size:18px;line-height:1.55}
 .c3 .box h3{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#14213d;margin-bottom:6px}
+.k5 .a{left:40%;top:6px;width:20%;height:14px;background:#4aa56a;border-radius:50%}
+.k5 .b{left:15%;right:15%;top:26px;height:3px;background:#2e7d32}
+.k5 .c{left:34%;right:34%;top:38px;height:2px;background:#6f8fc7;box-shadow:0 7px 0 #222}
+.k5 .d{left:26%;right:26%;top:62px;height:2px;background:#bbb;box-shadow:0 6px 0 #ddd}
+.c5{font-family:'Times New Roman',Tinos,serif;padding:64px 80px 60px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#000}
+.c5 .logo,.c5 .crest{width:150px;height:150px}
+.c5 .crest{font-size:40px;color:#1d7a46}
+.c5 .uni{font-size:30px;font-weight:700;color:#1f6b3a;margin-top:22px}
+.c5 .dept{font-size:22px;color:#333;margin-top:2px}
+.c5 .kind{font-size:24px;color:#3d6db5;margin-top:78px}
+.c5 .of{font-size:17px;font-weight:700;margin-top:4px}
+.c5 .title{font-size:29px;font-weight:700;margin-top:26px;max-width:620px;line-height:1.3}
+.c5 .by{font-size:22px;font-weight:700;margin-top:62px}
+.c5 .by + div{font-size:19px;margin-top:2px}
+.c5 .course{font-size:19px;color:#3d6db5;margin-top:62px;line-height:1.5;max-width:620px}
+.c5 .ins{margin-top:64px;font-size:19px;color:#3d6db5}
+.c5 .ins b{display:block;color:#000;font-size:23px;margin-top:6px}
+.c5 .ins div{color:#000;font-size:18px;line-height:1.5}
+.c5 .bot{margin-top:auto;font-size:18px;color:#3d6db5;line-height:1.6}
 .c3 .date{margin-top:auto;text-align:center;font-size:19px;padding-top:20px;border-top:1px solid #dde0ea}
 
 @media(max-width:1150px){.dark{grid-template-columns:1fr}.preview{position:static}}
 @media(max-width:900px){.lbox{grid-template-columns:1fr}.feats{display:none}.wrap{margin:0;border-radius:0;padding:16px 14px}#nav{order:3;width:100%}.ut{display:none}.title h1{font-size:30px}.row{grid-template-columns:1fr}.dark{padding:14px}}
+.foot{max-width:1360px;margin:0 auto;padding:6px 28px 34px}
+.fin{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;border-top:1px solid #cdd0e6;padding-top:24px;color:var(--muted);font-size:13.5px;line-height:1.7}
+.fb{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:19px;margin-bottom:6px}
+.fb i{width:36px;height:36px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-style:normal;font-size:16px}
+.fr{text-align:right}
+.fr b{color:var(--ink)}
+.fr a{color:var(--pur);text-decoration:underline;text-underline-offset:2px}
+dialog#privDlg{border:0;border-radius:24px;padding:26px 28px;max-width:460px;width:calc(100% - 32px);box-shadow:var(--shadow);color:var(--ink);font-family:inherit}
+dialog#privDlg::backdrop{background:rgba(29,30,54,.55)}
+dialog#privDlg h3{font-size:19px;margin-bottom:10px}
+dialog#privDlg p{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:8px}
+dialog#privDlg .btn{margin-top:14px;height:42px}
+@media(max-width:900px){.foot{padding:6px 16px 28px}.fr{text-align:left}}
 </style>
 </head>
 <body>
@@ -242,7 +274,7 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 <section id="login"><div class="lbox">
   <div class="hero">
     <div>
-      <div class="hero-logo"><img class="logoImg hidden" alt="logo.png"><b class="logoFb">UFTB</b></div>
+      <div class="hero-logo"><img class="logoImg hidden" alt=""><b class="logoFb">UFTB</b></div>
       <h1>কভার পেজ,<br>এক মিনিটেই রেডি।</h1>
       <p class="lead">ইউনিভার্সিটি অব ফ্রন্টিয়ার টেকনোলজি, বাংলাদেশ-এর অ্যাসাইনমেন্ট ও ল্যাব রিপোর্টের জন্য রেডি-মেড কভার পেজ। তথ্য দিন, টেমপ্লেট বেছে নিন, PDF নিন।</p>
       <div class="feats">
@@ -251,15 +283,15 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
         <div class="feat"><div class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></div>নাম, আইডি, সেশন অটো-ফিল থাকে</div>
       </div>
     </div>
-    <small>&copy; Masfiq Rahman Misha & Onu- অণু</small>
+    <small>&copy; UFTB Student Tool</small>
   </div>
   <div class="login-side">
     <form class="login-card" id="loginForm">
-      <h2>Welcome</h2>
+      <h2>Welcome 👋</h2>
       <p>একবার আপনার তথ্য দিন, পরের বার থেকে সব অটো-ফিল থাকবে।</p>
-      <div class="field"><label>Full Name</label><input id="l_name" value="Masfiq Rahman Misha" required></div>
+      <div class="field"><label>Full Name</label><input id="l_name" value="Enter Your Name" required></div>
       <div class="row">
-        <div class="field"><label>Student ID</label><input id="l_id" value="2303020" required></div>
+        <div class="field"><label>Student ID</label><input id="l_id" value="0000000" required></div>
         <div class="field"><label>Session</label><input id="l_session" value="2023-24" required></div>
       </div>
       <div class="field"><label>Department</label><input id="l_dept" value="Software Engineering" required></div>
@@ -284,15 +316,16 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
     <div class="seg" id="typeSeg">
       <button class="on" data-v="Assignment"><svg class="i" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Assignment</button>
       <button data-v="Lab Report"><svg class="i" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>Lab Report</button>
+      <button data-v="Project Proposal"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>Project Proposal</button>
     </div>
     <div class="fgrid">
       <div class="field"><label id="serialLbl">Assignment No.</label><input id="f_serial" placeholder="01" value="01"></div>
       <div class="field"><label>Submission Date</label><input type="date" id="f_date"></div>
       <div class="field"><label id="topicLbl">Assignment Name</label><input id="f_topic" placeholder="e.g. Basic Dart Programs"></div>
-      <div class="field"><label>Course Code</label><input id="f_cid" placeholder="PROG 212"></div>
-      <div class="field"><label>Level-Term</label><input id="f_lt" placeholder="Level-2 Term-1" value="Level-2 Term-1"></div>
-      <div class="field"><label>Course Title</label><input id="f_ctitle" placeholder="Android and Web Application Development Sessional"></div>
-      <div class="field" style="margin-bottom:0"><label>শিক্ষকের নাম</label><input id="f_teacher" placeholder="Md. Ahsan Habib"></div>
+      <div class="field"><label>Course Code</label><input id="f_cid" placeholder="CODE 420"></div>
+      <div class="field"><label>Level-Term</label><input id="f_lt" placeholder="Level-0 Term-0" value="Level-2 Term-1"></div>
+      <div class="field"><label>Course Title</label><input id="f_ctitle" placeholder="Course TITILE"></div>
+      <div class="field" style="margin-bottom:0"><label>শিক্ষকের নাম</label><input id="f_teacher" placeholder="Name of the teacher"></div>
       <div class="field" style="margin-bottom:0"><label>শিক্ষকের পদবি</label><input id="f_desig" placeholder="Lecturer"></div>
     </div>
   </div>
@@ -302,11 +335,13 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
       <div class="dcard" id="p2">
         <div class="ph"><div class="num">2</div><div><h2>টেমপ্লেট ও লোগো</h2><small>স্টাইল বেছে নিন</small></div></div>
         <div class="tpls" id="tpls">
-          <button class="tpl on" data-v="c0"><div class="thumb k0"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i></div>UFTB Official</button>
+          <button class="tpl on" data-v="c0"><div class="thumb k0"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i></div>Classic</button>
+          <button class="tpl" data-v="c5"><div class="thumb k5"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>Formal</button>
           <button class="tpl" data-v="c4"><div class="thumb k4"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i></div>IEEE</button>
           <button class="tpl" data-v="c1"><div class="thumb k1"><i class="a"></i></div>Classic</button>
           <button class="tpl" data-v="c2"><div class="thumb k2"><i class="a"></i><i class="b"></i></div>Modern</button>
           <button class="tpl" data-v="c3"><div class="thumb k3"><i class="a"></i><i class="b"></i></div>Bold</button>
+          
         </div>
         <div class="logo-box">
           <div class="pv"><img class="logoImg hidden" alt=""><b class="logoFb">LOGO</b></div>
@@ -333,13 +368,24 @@ svg.i{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stro
       <div class="stage" id="stage"><div class="stage-wrap" id="sw"><div class="scaler" id="scaler"><div id="cover"></div></div></div></div>
     </div>
   </div>
-</div></div>
+</div>
+  <footer class="foot"><div class="fin">
+    <div><div class="fb"><i>U</i>UFTB Cover</div><div>অ্যাসাইনমেন্ট, ল্যাব রিপোর্ট ও প্রজেক্ট প্রপোজালের কভার পেজ বানান ও PDF নিন।</div></div>
+    <div class="fr"><div>&copy; 2026 UFTB Cover &middot; by <b>Masfiq Rahman Misha</b></div><div>Contact: <a href="mailto:your-email@example.com">your-email@example.com</a></div><a href="#" id="privLink">Privacy Policy</a></div>
+  </div></footer>
+</div>
+
+<dialog id="privDlg"><h3>Privacy Policy</h3>
+  <p>এই টুলের সবকিছু আপনার ব্রাউজারেই চলে। কোনো সার্ভারে আপনার তথ্য বা ফাইল পাঠানো হয় না।</p>
+  <p>নাম, আইডি, সেশন ও লোগো শুধু আপনার ব্রাউজারের localStorage-এ সেভ থাকে। আপলোড করা PDF ডিভাইসের বাইরে যায় না।</p>
+  <p>লগআউট করলে সেভ করা প্রোফাইল মুছে যায়।</p>
+  <button class="btn full" id="privClose">ঠিক আছে</button></dialog>
 
 <script>
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const DEFAULT_FAC = 'Faculty of Software and Machine Intelligence Engineering';
-const TPL_NAMES = {c0:'UFTB Official',c4:'IEEE',c1:'Classic',c2:'Modern',c3:'Bold'};
+const TPL_NAMES = {c0:'UFTB Official',c4:'IEEE',c1:'Classic',c2:'Modern',c3:'Bold',c5:'Formal'};
 const state = { type:'Assignment', tpl:'c0', logo:'', pdf:null };
 const esc = s => String(s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pad = n => /^\d$/.test(n) ? '0'+n : n;
@@ -407,8 +453,8 @@ function render(){
     cid:esc($('#f_cid').value.trim()), ctitle:esc($('#f_ctitle').value.trim()),
     lt:esc($('#f_lt').value.trim()), date:fmtDate($('#f_date').value)
   };
-  const isA = state.type==='Assignment';
-  const docTitle = (isA?'Assignment':'Lab Report') + (d.serial? (state.tpl==='c0' ? ' #'+d.serial : ' No: '+d.serial) : '');
+  const isA = state.type==='Assignment', typeName=state.type, isP=state.type==='Project Proposal';
+  const docTitle = typeName + (d.serial&&!isP? (state.tpl==='c0' ? ' #'+d.serial : ' No: '+d.serial) : '');
   const logo = state.logo ? `<img class="logo" src="${state.logo}" alt="">` : `<div class="crest">UFTB</div>`;
   const uni='University of Frontier Technology, Bangladesh';
   const dep='Department of '+esc(u.dept.replace(/^department of\s*/i,''));
@@ -438,8 +484,8 @@ function render(){
     h=`<div class="cover c4">${logo}
       <div class="uni">${uni}</div><div class="dept">${dep}</div>
       <div class="rule2"></div>
-      <div class="kind">${isA?'Assignment':'Lab Report'}${d.serial?' &middot; No. '+d.serial:''}</div>
-      <div class="title wrap">${d.topic||'Title of the '+(isA?'Assignment':'Lab Report')}</div>
+      <div class="kind">${typeName}${d.serial&&!isP?' &middot; No. '+d.serial:''}</div>
+      <div class="title wrap">${d.topic||'Title of the '+typeName}</div>
       <div class="sub">Submitted in partial fulfillment of the requirements of<br><b>${d.cid||dash}</b> &mdash; ${d.ctitle||dash}</div>
       <div class="auth">
         <div><div class="lab">Author</div><div class="n">${esc(u.name)}</div><div class="it">${dep.replace('Department of','Dept. of')}</div><div class="it">UFTB</div><div>ID: ${esc(u.id)} &middot; Session: ${esc(u.session)}</div></div>
@@ -452,10 +498,21 @@ function render(){
       <div class="doc">${docTitle}</div>${topic}
       <div class="tbl">${rows}</div><div class="two">${to}${by}</div><div class="date">${dateB}</div></div></div>`;
   } else if(state.tpl==='c2'){
-    h=`<div class="cover c2"><div class="band"><span>UFTB &middot; ${isA?'Assignment':'Lab Report'}</span></div><div class="in">
+    h=`<div class="cover c2"><div class="band"><span>UFTB &middot; ${typeName}</span></div><div class="in">
       ${logo}<h1 class="uni">${uni}</h1><div class="dept">${dep}</div>
       <div class="doc">${docTitle}</div>${topic||'<div class="topic">&nbsp;</div>'}
       <div class="tbl">${rows}</div><div class="two">${to}${by}</div><div class="date">${dateB}</div></div></div>`;
+  } else if(state.tpl==='c5'){
+    const dS=esc(u.dept.replace(/^department of\s*/i,'')), dv=$('#f_date').value;
+    const my=dv?new Date(dv+'T00:00:00').toLocaleDateString('en-GB',{month:'long',year:'numeric'}):'—';
+    h=`<div class="cover c5">${logo}
+      <div class="uni">${uni}</div><div class="dept">${dep}</div>
+      <div class="kind">${typeName}${d.serial&&!isP?' No: '+d.serial:''}</div><div class="of">${isP?'Of':'On'}</div>
+      <div class="title wrap">${d.topic?'&quot;'+d.topic+'&quot;':'&nbsp;'}</div>
+      <div class="by">${esc(u.name)}</div><div>ID: ${esc(u.id)}</div>
+      <div class="course">Course Title: ${d.ctitle||dash}<br>Course Code: ${d.cid||dash}</div>
+      <div class="ins">Instructor:<b>${d.teacher||dash}</b><div>${d.desig?d.desig+', ':''}${dep}</div><div>${uni}</div></div>
+      <div class="bot">${my}<br>Session: ${esc(u.session)}</div></div>`;
   } else {
     h=`<div class="cover c3"><div class="head">${logo}<div><h1 class="uni">${uni}</h1><div class="dept">${dep}</div></div></div>
       <div class="in"><div class="doc">${docTitle}</div>${topic}<div class="rule"></div>
@@ -469,9 +526,10 @@ $$('#app input').forEach(i=>i.addEventListener('input',render));
 $('#typeSeg').onclick=e=>{
   const b=e.target.closest('button'); if(!b) return;
   $$('#typeSeg button').forEach(x=>x.classList.toggle('on',x===b));
-  state.type=b.dataset.v; const a=state.type==='Assignment';
-  $('#serialLbl').textContent=a?'Assignment No.':'Lab Report No.';
-  $('#topicLbl').textContent=a?'Assignment Name':'Experiment Name';
+  state.type=b.dataset.v;
+  const L={'Assignment':['Assignment No.','Assignment Name'],'Lab Report':['Lab Report No.','Experiment Name'],'Project Proposal':['Proposal No. (ঐচ্ছিক)','Project Title']}[state.type];
+  $('#serialLbl').textContent=L[0]; $('#topicLbl').textContent=L[1];
+  const sr=$('#f_serial'); if(state.type==='Project Proposal') sr.value=''; else if(!sr.value) sr.value='01';
   render();
 };
 $('#tpls').onclick=e=>{
@@ -545,6 +603,9 @@ $('#dlBtn').onclick=async()=>{
 };
 
 $$('#nav a').forEach(a=>a.addEventListener('click',()=>{$$('#nav a').forEach(x=>x.classList.toggle('on',x===a));}));
+
+$('#privLink').onclick=e=>{e.preventDefault();$('#privDlg').showModal();};
+$('#privClose').onclick=()=>$('#privDlg').close();
 
 /* ---------- Init ---------- */
 (function(){
